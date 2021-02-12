@@ -1,0 +1,25 @@
+# This workflow integrates ShiftLeft Inspect with GitHub
+# Visit https://docs.shiftleft.io for help
+name: Analyze with ShiftLeft NG SAST
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  Inspect-Build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download ShiftLeft cli
+      run: |
+        curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Analyze with Inspect
+      run: |
+        pip install -r requirements.txt
+        ${GITHUB_WORKSPACE}/sl analyze --app dvga-python --tag app.group=python-alpha --tag branch=${GITHUB_REF} --python --cpg --nolink .
+      env:
+        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
