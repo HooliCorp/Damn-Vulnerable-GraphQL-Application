@@ -19,6 +19,9 @@ jobs:
         python-version: '3.8'
     - name: Analyze with Inspect
       run: |
+        python3 -m venv .venv
+        . .venv/bin/activate
+        pip install --upgrade setuptools wheel
         pip install -r requirements.txt
         ${GITHUB_WORKSPACE}/sl analyze --app dvga-python --tag app.group=python-alpha --tag branch=${GITHUB_REF} --python --cpg --godmodeon .
       env:
