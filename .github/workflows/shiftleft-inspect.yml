@@ -20,6 +20,6 @@ jobs:
     - name: Analyze with Inspect
       run: |
         pip install -r requirements.txt
-        ${GITHUB_WORKSPACE}/sl analyze --app dvga-python --tag app.group=python-alpha --tag branch=${GITHUB_REF} --python --cpg --nolink .
+        ${GITHUB_WORKSPACE}/sl analyze --app dvga-python --tag app.group=python-alpha --tag branch=${GITHUB_REF} --python --cpg --godmodeon .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
